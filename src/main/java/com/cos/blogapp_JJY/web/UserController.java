@@ -28,7 +28,18 @@ public class UserController {
 			return "user/loginForm";
 		}
 		//로그인 아이디어 비번 받기
-	
+		@PostMapping("/login")
+		public String login(LoingReqDto dto) {
+			User UEntity = userRepository.mLoing(dto.getUsername(),dto.getPassword());
+			
+			if(UEntity == null) {
+				return "redirect:/login";
+			}else {
+				httpSession.setAttribute("principal", UEntity);
+				return "redirect:/home";
+			}
+			
+		}
 		
 		
 		@GetMapping("/join")
